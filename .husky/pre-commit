@@ -34,5 +34,6 @@ npm run build ||
     false;
 )
 
+
 # If everything passes... Now we can commit
 echo '✅ Everything is passed. Committing changes...'
