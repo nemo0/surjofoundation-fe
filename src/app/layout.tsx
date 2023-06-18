@@ -1,6 +1,9 @@
 import AppProvider from "./app-provider";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { AuthProvider } from "@/context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <AuthProvider>{children}</AuthProvider>
+          {/* <ToastContainer /> */}
+        </AppProvider>
       </body>
     </html>
   );

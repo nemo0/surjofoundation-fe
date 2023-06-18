@@ -12,7 +12,11 @@ export const metadata: Metadata = {
   description: "Authentication forms built using the components.",
 };
 
-export default function AuthenticationPage() {
+export default function AuthenticationPage({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <div className="container h-screen flex-col items-center justify-center md:grid lg:px-0">
@@ -24,7 +28,7 @@ export default function AuthenticationPage() {
                 Enter your email and password to continue
               </p>
             </div>
-            <UserAuthForm />
+            {children}
           </div>
         </div>
       </div>

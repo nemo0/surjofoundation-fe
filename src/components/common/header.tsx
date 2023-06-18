@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useAppProvider } from "@/app/app-provider";
 import { DropdownProfileMenu } from "./dropdown-profile";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Header() {
   const { sidebarOpen, setSidebarOpen } = useAppProvider();
-  const [searchModalOpen, setSearchModalOpen] = useState<boolean>(false);
+
+  const { user } = useAuth();
 
   return (
     <header className="sticky top-0 bg-slate-900 dark:bg-[#182235] border-b border-slate-700 z-30">
@@ -38,9 +40,7 @@ export default function Header() {
 
           {/* Header: Right side */}
           <div>
-            <div>
-              <DropdownProfileMenu />
-            </div>
+            <div>{user && <DropdownProfileMenu user={user} />}</div>
           </div>
         </div>
       </div>

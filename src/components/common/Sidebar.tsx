@@ -28,12 +28,12 @@ const MENU_ITEMS = [
   },
   {
     label: "View All Students",
-    href: "/students",
+    href: "/student",
     icon: GraduationCap,
   },
   {
     label: "Add New Student",
-    href: "/students/add",
+    href: "/student/add",
     icon: UserPlus,
   },
 ];
