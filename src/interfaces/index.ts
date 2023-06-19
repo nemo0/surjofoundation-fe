@@ -17,9 +17,14 @@ export interface IUserDecoded {
 export interface IStudent {
   fullName: string;
   guardianName: string;
+  gender: string;
+  dateOfBirth: string;
+  caste: string;
+  religion: string;
   aadhaarNumber: string;
   contactNumber: string;
   address: string;
+  highestQualification: string;
   course: string;
   file: any;
 }
@@ -41,6 +46,7 @@ export interface IStudentPayload {
   imageLink: string;
   registrationCenter: string;
   isCertificateIssued: boolean;
+  dateOfBirth: Date;
 }
 
 export interface UserObject {
@@ -48,4 +54,20 @@ export interface UserObject {
   email: string;
   role: string;
   centerId: string;
+}
+
+export interface IStudentTableData {
+  fullName: string;
+  guardianName: string;
+  contactNumber: string;
+  courseName: string;
+  courseDuration: string;
+  isCertificateIssued: boolean;
+}
+
+export interface ICourse {
+  courseName: string;
+  courseDuration: string;
+  courseDescription: string;
+  courseCode: string;
 }

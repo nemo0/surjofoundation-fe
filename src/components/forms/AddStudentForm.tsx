@@ -15,6 +15,35 @@ import jwtDecode from "jwt-decode";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 
+const CASTES = [
+  "Unreserved",
+  "Scheduled Caste",
+  "Scheduled Tribe",
+  "Other Backward Class - A(OBC-A)",
+  "Other Backward Class - B(OBC-B)",
+];
+
+const RELIGIONS = [
+  "Hinduism",
+  "Islam",
+  "Christianity",
+  "Sikhism",
+  "Buddhism",
+  "Jainism",
+  "Zoroastrianism",
+  "Judaism",
+  "Others",
+];
+
+const QUALIFICATIONS = [
+  "Below 10th",
+  "Secondary (10th)",
+  "Higher Secondary (12th)",
+  "Graduate",
+  "Post Graduate",
+  "Others",
+];
+
 const AddStudentForm: React.FC = () => {
   const [courses, setCourses] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -36,8 +65,8 @@ const AddStudentForm: React.FC = () => {
 
       data.data.map((course: ICourse) => {
         allCourses.push({
-          value: course.courseName,
-          label: course.courseName,
+          value: course._id,
+          label: course.courseName + "(" + course.courseDuration + ")",
         });
       });
 
@@ -80,6 +109,7 @@ const AddStudentForm: React.FC = () => {
           isCertificateIssued: false,
           aadhaarNumber: parseInt(data.aadhaarNumber.replace(/\s/g, "")),
           contactNumber: parseInt(data.contactNumber),
+          dateOfBirth: new Date(data.dateOfBirth),
         };
 
         const { data: studentResponse } = await instance.post(
@@ -119,6 +149,77 @@ const AddStudentForm: React.FC = () => {
         />
         {errors.guardianName && (
           <p className="text-red-600 text-xs">{errors.guardianName.message}</p>
+        )}
+      </div>
+
+      <div>
+        <label className="font-medium text-black text-sm">Date of Birth</label>
+        <input
+          {...register("dateOfBirth")}
+          placeholder="Date of Birth"
+          type="date"
+          className="w-full p-2 border border-gray-300 rounded mt-1"
+        />
+        {errors.dateOfBirth && (
+          <p className="text-red-600 text-xs">{errors.dateOfBirth.message}</p>
+        )}
+      </div>
+
+      <div>
+        <label className="font-medium text-black text-sm">Gender</label>
+        <select
+          {...register("gender")}
+          className="w-full p-2 border border-gray-300 rounded mt-1"
+        >
+          <option value="" disabled selected>
+            Select Gender
+          </option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        {errors.gender && (
+          <p className="text-red-600 text-xs">{errors.gender.message}</p>
+        )}
+      </div>
+
+      <div>
+        <label className="font-medium text-black text-sm">Caste</label>
+        <select
+          {...register("caste")}
+          className="w-full p-2 border border-gray-300 rounded mt-1"
+        >
+          <option value="" disabled selected>
+            Select Caste
+          </option>
+          {CASTES.map((caste, index) => (
+            <option value={caste} key={index}>
+              {caste}
+            </option>
+          ))}
+        </select>
+        {errors.caste && (
+          <p className="text-red-600 text-xs">{errors.caste.message}</p>
+        )}
+      </div>
+
+      <div>
+        <label className="font-medium text-black text-sm">Religion</label>
+        <select
+          {...register("religion")}
+          className="w-full p-2 border border-gray-300 rounded mt-1"
+        >
+          <option value="" disabled selected>
+            Select Religion
+          </option>
+          {RELIGIONS.map((religion, index) => (
+            <option value={religion} key={index}>
+              {religion}
+            </option>
+          ))}
+        </select>
+        {errors.religion && (
+          <p className="text-red-600 text-xs">{errors.religion.message}</p>
         )}
       </div>
 
@@ -170,13 +271,37 @@ const AddStudentForm: React.FC = () => {
 
       <div>
         <label className="font-medium text-black text-sm">Address</label>
-        <input
+        <textarea
           {...register("address")}
           placeholder="Address"
           className="w-full p-2 border border-gray-300 rounded mt-1"
         />
         {errors.address && (
           <p className="text-red-600 text-xs">{errors.address.message}</p>
+        )}
+      </div>
+
+      <div>
+        <label className="font-medium text-black text-sm">
+          Highest Qualification
+        </label>
+        <select
+          {...register("highestQualification")}
+          className="w-full p-2 border border-gray-300 rounded mt-1"
+        >
+          <option value="" disabled selected>
+            Select Highest Qualification
+          </option>
+          {QUALIFICATIONS.map((highestQualification, index) => (
+            <option value={highestQualification} key={index}>
+              {highestQualification}
+            </option>
+          ))}
+        </select>
+        {errors.highestQualification && (
+          <p className="text-red-600 text-xs">
+            {errors.highestQualification.message}
+          </p>
         )}
       </div>
 

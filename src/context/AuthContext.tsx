@@ -8,9 +8,13 @@ import { IUserDecoded } from "@/interfaces";
 
 interface AuthContextData {
   user: IUserDecoded | null;
+  logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextData>({ user: null });
+const AuthContext = createContext<AuthContextData>({
+  user: null,
+  logout: () => {},
+});
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -20,7 +24,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<IUserDecoded | null>(null);
 
   useEffect(() => {
-    const token = getCookie(AUTH_COOKIE_NAME); // replace with your token cookie name
+    const token = getCookie(AUTH_COOKIE_NAME);
     if (token) {
       try {
         const decodedToken = jwt_decode(token as string) as IUserDecoded;
@@ -31,10 +35,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
+  const logout = () => {
+    setUser(null);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
+        logout,
       }}
     >
       {children}

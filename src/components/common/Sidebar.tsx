@@ -18,6 +18,8 @@ import {
   UserCircle,
 } from "lucide-react";
 
+import { useAuth } from "@/context/AuthContext";
+
 // import Logo from "./logo";
 
 const MENU_ITEMS = [
@@ -41,22 +43,22 @@ const MENU_ITEMS = [
 const ADMIN_MENUBAR = [
   {
     label: "View Branch Centers",
-    href: "/admin/branch-centers",
+    href: "/branch-centers",
     icon: Building,
   },
   {
     label: "Add Branch Center",
-    href: "/admin/branch-centers/add",
+    href: "/branch-centers/add",
     icon: PlusIcon,
   },
   {
     label: "View Courses",
-    href: "/admin/courses",
+    href: "/courses",
     icon: School,
   },
   {
     label: "Add New Course",
-    href: "/admin/courses/add",
+    href: "/courses/add",
     icon: BookPlus,
   },
 ];
@@ -118,6 +120,8 @@ export default function Sidebar() {
       window.removeEventListener("resize", handleBreakpoint);
     };
   }, [breakpoint]);
+
+  const { user } = useAuth();
 
   return (
     <div className={`min-w-fit ${sidebarExpanded ? "sidebar-expanded" : ""}`}>
@@ -185,8 +189,6 @@ export default function Sidebar() {
               </span>
             </h3>
             <ul className="mt-3">
-              {/* Inbox */}
-
               {MENU_ITEMS.map((item, index) => (
                 <li
                   className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
@@ -208,40 +210,42 @@ export default function Sidebar() {
           </div>
 
           {/* Admin Group */}
-          <div>
-            <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-              <span
-                className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                aria-hidden="true"
-              >
-                •••
-              </span>
-              <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                Admin
-              </span>
-            </h3>
-            <ul className="mt-3">
-              {/* Inbox */}
-
-              {ADMIN_MENUBAR.map((item, index) => (
-                <li
-                  className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
-                    segments.includes(item.label) && "bg-slate-900"
-                  }`}
-                  key={index}
+          {user?.role === "super-admin" && (
+            <div>
+              <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
+                <span
+                  className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+                  aria-hidden="true"
                 >
-                  <SidebarLink href={item.href}>
-                    <div className="flex items-center">
-                      <item.icon />
-                      <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        {item.label}
-                      </span>
-                    </div>
-                  </SidebarLink>
-                </li>
-              ))}
-            </ul>
-          </div>
+                  •••
+                </span>
+                <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                  Admin
+                </span>
+              </h3>
+              <ul className="mt-3">
+                {/* Inbox */}
+
+                {ADMIN_MENUBAR.map((item, index) => (
+                  <li
+                    className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
+                      segments.includes(item.label) && "bg-slate-900"
+                    }`}
+                    key={index}
+                  >
+                    <SidebarLink href={item.href}>
+                      <div className="flex items-center">
+                        <item.icon />
+                        <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                          {item.label}
+                        </span>
+                      </div>
+                    </SidebarLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           {/* More group */}
           <div>
             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
