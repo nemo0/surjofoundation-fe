@@ -15,6 +15,11 @@ import jwtDecode from "jwt-decode";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 
+import { Notifications } from "../common/Toast";
+import toast from "react-hot-toast";
+
+import { Alert } from "../ui/alert";
+
 const CASTES = [
   "Unreserved",
   "Scheduled Caste",
@@ -47,6 +52,7 @@ const QUALIFICATIONS = [
 const AddStudentForm: React.FC = () => {
   const [courses, setCourses] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -120,9 +126,17 @@ const AddStudentForm: React.FC = () => {
         console.log("RESPONSE::", studentResponse);
       }
       setLoading(false);
-    } catch (error) {
+
+      toast.success("Student added successfully", {
+        position: "bottom-center",
+      });
+    } catch (error: any) {
       console.log(error);
       setLoading(false);
+
+      toast.error(error.message, {
+        position: "bottom-center",
+      });
     }
   };
 
@@ -344,6 +358,7 @@ const AddStudentForm: React.FC = () => {
           "Add Student"
         )}
       </Button>
+      <Notifications />
     </form>
   );
 };

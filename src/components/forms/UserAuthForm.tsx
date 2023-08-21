@@ -12,6 +12,8 @@ import axios from "axios";
 import { API_BASE_URL, AUTH_COOKIE_NAME } from "@/lib/config";
 import { setCookie, getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import { Checkbox } from "../ui/ui/checkbox";
+import Link from "next/link";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -67,6 +69,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
+      <div className="flex flex-col space-y-2 text-center">
+        <h1 className="text-2xl font-semibold tracking-tight">Sign In</h1>
+        <p className="text-sm text-muted-foreground">
+          Enter your email and password to continue
+        </p>
+      </div>
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
           {isError && errorStatus === 406 && (
@@ -120,6 +128,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </Button>
         </div>
       </form>
+      <Link
+        href="/forgot-password"
+        passHref
+        className="hover:underline text-sm"
+      >
+        Forgot your password?
+      </Link>
     </div>
   );
 }

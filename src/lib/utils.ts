@@ -1,8 +1,7 @@
-import { ClassValue, clsx } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfigFile from "../../tailwind.config.js";
-
 export const tailwindConfig = resolveConfig(tailwindConfigFile) as any;
 
 export const getBreakpointValue = (value: string): number => {
@@ -61,9 +60,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function capitalizeFirstLetters(input: string): string {
-  return input
+export const capitalizeFirstLetters = (str: string) => {
+  return str
     .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-}
+};

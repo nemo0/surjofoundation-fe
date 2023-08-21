@@ -10,6 +10,7 @@ import { capitalizeFirstLetters } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import { Input } from "../ui/input";
+import { toast } from "react-hot-toast";
 
 const AddCourseForm: React.FC = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -36,9 +37,18 @@ const AddCourseForm: React.FC = () => {
 
       console.log(courseResponse);
       setLoading(false);
+
+      toast.success("Course Added Successfully", {
+        duration: 4000,
+        position: "bottom-center",
+      });
     } catch (error) {
       console.log(error);
       setLoading(false);
+      toast.error("Something went wrong", {
+        duration: 4000,
+        position: "bottom-center",
+      });
     }
   };
 

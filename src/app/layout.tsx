@@ -1,9 +1,11 @@
+"use client";
+
 import AppProvider from "./app-provider";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "@/context/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+import toast, { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,13 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <AppProvider>
-          <AuthProvider>{children}</AuthProvider>
-          {/* <ToastContainer /> */}
-        </AppProvider>
-      </body>
-    </html>
+    <>
+      <html lang="en">
+        <body className={inter.className}>
+          <AppProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </AppProvider>
+          <Toaster />
+        </body>
+      </html>
+    </>
   );
 }

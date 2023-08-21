@@ -40,5 +40,8 @@ export const columns: ColumnDef<IStudentTableData>[] = [
   {
     accessorKey: "isCertificateIssued",
     header: "Certificate Issued",
+    accessorFn: (data) => {
+      return data.isCertificateIssued ? "Yes" : "No";
+    },
   },
 ];

@@ -178,12 +178,17 @@ export default function Sidebar() {
           {/* Pages group */}
           <div>
             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-              <span
-                className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                aria-hidden="true"
-              >
-                •••
-              </span>
+              {MENU_ITEMS.map((item, index) => (
+                <span
+                  key={index}
+                  className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6 my-8"
+                  aria-hidden="true"
+                >
+                  <SidebarLink href={item.href}>
+                    <item.icon />
+                  </SidebarLink>
+                </span>
+              ))}
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 Branch
               </span>
@@ -213,12 +218,16 @@ export default function Sidebar() {
           {user?.role === "super-admin" && (
             <div>
               <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-                <span
-                  className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                  aria-hidden="true"
-                >
-                  •••
-                </span>
+                {MENU_ITEMS.map((item, index) => (
+                  <SidebarLink href={item.href} key={index}>
+                    <span
+                      className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+                      aria-hidden="true"
+                    >
+                      <item.icon />
+                    </span>
+                  </SidebarLink>
+                ))}
                 <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                   Admin
                 </span>
@@ -249,12 +258,16 @@ export default function Sidebar() {
           {/* More group */}
           <div>
             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-              <span
-                className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                aria-hidden="true"
-              >
-                •••
-              </span>
+              {ADMIN_MENUBAR.map((item, index) => (
+                <SidebarLink href={item.href} key={index}>
+                  <span
+                    className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6 my-6"
+                    aria-hidden="true"
+                  >
+                    <item.icon />
+                  </span>
+                </SidebarLink>
+              ))}
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 Profile
               </span>
