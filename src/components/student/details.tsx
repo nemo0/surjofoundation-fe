@@ -9,7 +9,7 @@ export default async function StudentDetails({
 }) {
   return (
     <div className="flex gap-x-4 justify-between flex-col md:flex-row ">
-      <div className="md:w-8/12 w-full md:order-1 order-2">
+      <div className="md:w-10/12 w-full md:order-1 order-2">
         <DetailsComponent name="Name" value={studentDetails?.fullName} />
         <DetailsComponent
           name="Guardian Name"
@@ -45,7 +45,7 @@ export default async function StudentDetails({
           value={studentDetails?.courseDetails.courseDuration}
         />
       </div>
-      <div className="md:w-4/12 w-full md:order-2 order-1">
+      <div className="md:w-2/12 w-full md:order-2 order-1">
         <Image
           src={studentDetails?.imageLink}
           alt="Profile Picture"

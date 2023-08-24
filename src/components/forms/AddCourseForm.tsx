@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const AddCourseForm: React.FC = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -24,13 +25,17 @@ const AddCourseForm: React.FC = () => {
     resolver: zodResolver(courseSchema),
   });
 
+  const router = useRouter();
+
   const onSubmit = async (data: ICourse) => {
     try {
       setLoading(true);
       const payload = {
         ...data,
         courseName: capitalizeFirstLetters(data.courseName),
-        courseCode: data.courseCode.replace(/\s/g, "").toUpperCase(),
+        courseCode: data?.courseCode
+          ? data?.courseCode.replace(/\s/g, "").toUpperCase()
+          : "",
       };
 
       const { data: courseResponse } = await instance.post("/course", payload);
@@ -42,6 +47,8 @@ const AddCourseForm: React.FC = () => {
         duration: 4000,
         position: "bottom-center",
       });
+
+      router.push("/courses");
     } catch (error) {
       console.log(error);
       setLoading(false);

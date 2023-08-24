@@ -32,8 +32,12 @@ export interface IStudent {
 export interface ICourse {
   _id: string;
   courseName: string;
-  courseDescription: string;
+  courseDescription?: string;
   courseDuration: string;
+  createdAt?: string;
+  updatedAt?: string;
+  courseCode?: string;
+  __v?: number;
 }
 
 export interface IStudentPayload {
@@ -66,24 +70,11 @@ export interface IStudentTableData {
   isCertificateIssued: boolean;
 }
 
-export interface ICourse {
-  courseName: string;
-  courseDuration: string;
-  courseDescription: string;
-  courseCode: string;
-}
-
 interface IRegistrationCenterDetails {
   _id: string;
   name: string;
   address: string;
   centerId: string;
-}
-
-interface ICourseDetails {
-  _id: string;
-  courseName: string;
-  courseDuration: string;
 }
 
 export interface IStudentResponseData {
@@ -97,5 +88,5 @@ export interface IStudentResponseData {
   isCertificateIssued: boolean;
   registrationNumber: string;
   registrationCenterDetails: IRegistrationCenterDetails;
-  courseDetails: ICourseDetails;
+  courseDetails: ICourse;
 }
