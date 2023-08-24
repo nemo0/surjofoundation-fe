@@ -15,6 +15,8 @@ import { useRouter } from "next/navigation";
 import { Checkbox } from "../ui/ui/checkbox";
 import Link from "next/link";
 
+import { useAuth } from "@/context/AuthContext";
+
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
@@ -26,6 +28,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [errorStatus, setErrorStatus] = React.useState<number>();
 
   const router = useRouter();
+
+  const { user } = useAuth();
 
   const handleLogin = async () => {
     try {
@@ -62,10 +66,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   React.useEffect(() => {
     const isCookie = getCookie(AUTH_COOKIE_NAME);
-    if (isCookie) {
+
+    if (isCookie && user) {
       router.push("/");
     }
-  }, [router, AUTH_COOKIE_NAME]);
+  }, [router, user]);
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>

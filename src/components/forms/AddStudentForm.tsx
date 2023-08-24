@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ICourse, IStudent, IStudentPayload, UserObject } from "@/interfaces";
@@ -19,6 +19,8 @@ import { Notifications } from "../common/Toast";
 import toast from "react-hot-toast";
 
 import { Alert } from "../ui/alert";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const CASTES = [
   "Unreserved",
@@ -52,6 +54,7 @@ const QUALIFICATIONS = [
 const AddStudentForm: React.FC = () => {
   const [courses, setCourses] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [isUser, setIsUser] = React.useState<boolean>(false);
 
   const {
     register,
@@ -62,6 +65,21 @@ const AddStudentForm: React.FC = () => {
   } = useForm<IStudent>({
     resolver: zodResolver(studentSchema),
   });
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const isUser = () => {
+      const token = getCookie(AUTH_COOKIE_NAME);
+      if (!token) {
+        router.push("/login");
+      }
+
+      setIsUser(true);
+    };
+
+    isUser();
+  }, []);
 
   React.useEffect(() => {
     const getCourses = async () => {
@@ -79,8 +97,8 @@ const AddStudentForm: React.FC = () => {
       setCourses(allCourses);
     };
 
-    getCourses();
-  }, []);
+    isUser && getCourses();
+  }, [isUser]);
 
   const onSubmit = async (data: IStudent) => {
     try {

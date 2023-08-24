@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { IStudentTableData } from "@/interfaces";
+import { useEffect, useState } from "react";
 
 import {
   ColumnDef,
@@ -26,6 +25,10 @@ import {
 
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+
+import { useRouter } from "next/navigation";
+import { getCookie } from "cookies-next";
+import { AUTH_COOKIE_NAME } from "@/lib/config";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,6 +56,19 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const isUser = () => {
+      const token = getCookie(AUTH_COOKIE_NAME);
+      if (!token) {
+        router.push("/login");
+      }
+    };
+
+    isUser();
+  }, []);
 
   return (
     <div className="rounded-md border">
@@ -95,9 +111,14 @@ export function DataTable<TData, TValue>({
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+                  <>
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  </>
                 ))}
               </TableRow>
             ))

@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { IStudentTableData } from "@/interfaces";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export const columns: ColumnDef<IStudentTableData>[] = [
   {
@@ -43,5 +44,20 @@ export const columns: ColumnDef<IStudentTableData>[] = [
     accessorFn: (data) => {
       return data.isCertificateIssued ? "Yes" : "No";
     },
+  },
+  {
+    header: "View Details",
+    cell: ({ cell }) => (
+      <Link href={`/student/${cell.row.original._id}`}>
+        <Button
+          onClick={() => {
+            console.log("cell: ", cell);
+            console.log("cell.row.original: ", cell.row.original);
+          }}
+        >
+          Details
+        </Button>
+      </Link>
+    ),
   },
 ];

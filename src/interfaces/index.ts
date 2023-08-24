@@ -57,6 +57,7 @@ export interface UserObject {
 }
 
 export interface IStudentTableData {
+  _id?: string;
   fullName: string;
   guardianName: string;
   contactNumber: string;
@@ -70,4 +71,31 @@ export interface ICourse {
   courseDuration: string;
   courseDescription: string;
   courseCode: string;
+}
+
+interface IRegistrationCenterDetails {
+  _id: string;
+  name: string;
+  address: string;
+  centerId: string;
+}
+
+interface ICourseDetails {
+  _id: string;
+  courseName: string;
+  courseDuration: string;
+}
+
+export interface IStudentResponseData {
+  _id: string;
+  fullName: string;
+  guardianName: string;
+  aadhaarNumber: number;
+  contactNumber: number;
+  address: string;
+  imageLink: string;
+  isCertificateIssued: boolean;
+  registrationNumber: string;
+  registrationCenterDetails: IRegistrationCenterDetails;
+  courseDetails: ICourseDetails;
 }

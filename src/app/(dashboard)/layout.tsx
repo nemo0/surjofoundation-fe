@@ -18,27 +18,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <AppProvider>
-          <AuthProvider>
-            <div className="flex h-[100dvh] overflow-hidden">
-              {/* Sidebar */}
-              <Sidebar />
+    <AppProvider>
+      <AuthProvider>
+        <div className="flex h-[100dvh] overflow-hidden">
+          {/* Sidebar */}
+          <Sidebar />
 
-              {/* Content area */}
-              <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                {/*  Site header */}
-                <Header />
+          {/* Content area */}
+          <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+            {/*  Site header */}
+            <Header />
 
-                <main className="grow [&>*:first-child]:scroll-mt-16 container my-6">
-                  {children}
-                </main>
-              </div>
-            </div>
-          </AuthProvider>
-        </AppProvider>
-      </body>
-    </html>
+            <main className="grow [&>*:first-child]:scroll-mt-16 container my-6">
+              {children}
+            </main>
+          </div>
+        </div>
+      </AuthProvider>
+    </AppProvider>
   );
 }

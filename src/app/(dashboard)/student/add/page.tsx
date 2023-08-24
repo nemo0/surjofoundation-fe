@@ -1,3 +1,5 @@
+"use client";
+
 import AddStudentForm from "@/components/forms/AddStudentForm";
 
 import React from "react";
