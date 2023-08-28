@@ -90,3 +90,18 @@ export interface IStudentResponseData {
   registrationCenterDetails: IRegistrationCenterDetails;
   courseDetails: ICourse;
 }
+
+export interface IBranchDetails {
+  _id: string;
+  name: string;
+  email: string;
+  contactNumber: number;
+  address: string;
+  inCharge: string;
+  role: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  centerId: string;
+}

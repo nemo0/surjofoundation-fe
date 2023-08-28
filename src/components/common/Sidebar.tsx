@@ -43,12 +43,12 @@ const MENU_ITEMS = [
 const ADMIN_MENUBAR = [
   {
     label: "View Branch Centers",
-    href: "/branch-centers",
+    href: "/branch",
     icon: Building,
   },
   {
     label: "Add Branch Center",
-    href: "/branch-centers/add",
+    href: "/branch/add",
     icon: PlusIcon,
   },
   {

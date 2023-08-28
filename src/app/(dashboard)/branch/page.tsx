@@ -1,8 +1,8 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
 import { CoursesDatatable } from "@/components/Datatables/CoursesDatatable";
+import { UsersDatatable } from "@/components/Datatables/UsersDatatable";
 import instance from "@/lib/axios";
-import { ICourse } from "@/interfaces";
 import { cookies } from "next/headers";
 import { AUTH_COOKIE_NAME } from "@/lib/config";
 
@@ -14,10 +14,11 @@ const getAuthCookieData = async () => {
   return token;
 };
 
-const getCourses = async () => {
+const getUsers = async () => {
   try {
     const token = await getAuthCookieData();
-    const { data } = await instance.get("/course", {
+
+    const { data } = await instance.get("/users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -30,17 +31,17 @@ const getCourses = async () => {
 };
 
 export default async function Page() {
-  const courses: ICourse[] = await getCourses();
+  const users = await getUsers();
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900">Courses List</h1>
+      <h1 className="text-2xl font-bold text-gray-900">Branch List</h1>
 
-      {courses ? (
-        <CoursesDatatable data={courses} />
+      {users ? (
+        <UsersDatatable data={users} />
       ) : (
         <div className="flex flex-col items-center justify-center space-y-4">
-          <p>No courses found</p>
+          <p>No users found</p>
         </div>
       )}
       <Toaster />

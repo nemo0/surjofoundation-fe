@@ -38,3 +38,5 @@ export default function RootLayout({
     </AppProvider>
   );
 }
+
+export const dynamic = "force-dynamic";

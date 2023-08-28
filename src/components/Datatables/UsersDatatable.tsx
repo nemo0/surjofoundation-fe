@@ -29,14 +29,49 @@ import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { AUTH_COOKIE_NAME } from "@/lib/config";
+import { ArrowUpDown } from "lucide-react";
+import { ICourse } from "@/interfaces";
+import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  data: ICourse[];
 }
 
-export function DataTable<TData, TValue>({
-  columns,
+export const Columns: ColumnDef<ICourse>[] = [
+  {
+    accessorKey: "centerId",
+    header: "Center ID",
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "contactNumber",
+    header: "Contact Number",
+  },
+  {
+    header: "View Details",
+    cell: ({ cell }) => (
+      <Link href={`/branch/${cell.row.original._id}`}>
+        <Button
+          onClick={() => {
+            console.log("cell: ", cell);
+            console.log("cell.row.original: ", cell.row.original);
+          }}
+        >
+          Details
+        </Button>
+      </Link>
+    ),
+  },
+];
+
+export function UsersDatatable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -44,7 +79,7 @@ export function DataTable<TData, TValue>({
 
   const table = useReactTable({
     data,
-    columns,
+    columns: Columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
@@ -74,12 +109,10 @@ export function DataTable<TData, TValue>({
     <div className="rounded-md border">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter Name..."
-          value={
-            (table.getColumn("fullName")?.getFilterValue() as string) ?? ""
-          }
+          placeholder="Filter Course..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("fullName")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -124,31 +157,13 @@ export function DataTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell colSpan={Columns.length} className="h-24 text-center">
                 No results.
               </TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
     </div>
   );
 }

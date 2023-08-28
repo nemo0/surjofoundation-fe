@@ -1,6 +1,6 @@
 import { IStudentResponseData } from "@/interfaces";
-import { Separator } from "../ui/separator";
 import Image from "next/image";
+import { DetailsComponent } from "../common/DetailsComponent";
 
 export default async function StudentDetails({
   studentDetails,
@@ -16,7 +16,7 @@ export default async function StudentDetails({
           value={studentDetails?.guardianName}
         />
         <DetailsComponent
-          name="Aadharar Number"
+          name="Aadhaar Number"
           value={addSpacesInAadharNumber(String(studentDetails?.aadhaarNumber))}
         />
         <DetailsComponent
@@ -38,11 +38,11 @@ export default async function StudentDetails({
         />
         <DetailsComponent
           name="Course Name"
-          value={studentDetails?.courseDetails.courseName}
+          value={studentDetails?.courseDetails?.courseName}
         />
         <DetailsComponent
           name="Course Duration"
-          value={studentDetails?.courseDetails.courseDuration}
+          value={studentDetails?.courseDetails?.courseDuration}
         />
       </div>
       <div className="md:w-2/12 w-full md:order-2 order-1">
@@ -56,18 +56,6 @@ export default async function StudentDetails({
     </div>
   );
 }
-
-const DetailsComponent = ({ name, value }: { name: string; value: string }) => {
-  return (
-    <>
-      <div className="flex w-full justify-between my-2 mt-4">
-        <h6 className="text-gray-500 text-sm ">{name}</h6>
-        <p className="text-gray-900 font-bold text-sm text-left">{value}</p>
-      </div>
-      <Separator />
-    </>
-  );
-};
 
 const addSpacesInAadharNumber = (aadharNumber: string) => {
   return aadharNumber.replace(/(.{4})/g, "$1 ").trim();

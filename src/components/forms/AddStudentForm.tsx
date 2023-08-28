@@ -55,6 +55,7 @@ const AddStudentForm: React.FC = () => {
   const [courses, setCourses] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [isUser, setIsUser] = React.useState<boolean>(false);
+  const [isFile, setIsFile] = React.useState<boolean>(false);
 
   const {
     register,
@@ -140,6 +141,10 @@ const AddStudentForm: React.FC = () => {
           "/student",
           payload
         );
+
+        const studentId = studentResponse.data._id;
+
+        router.push(`/student/${studentId}`);
 
         console.log("RESPONSE::", studentResponse);
       }
@@ -362,11 +367,12 @@ const AddStudentForm: React.FC = () => {
           register={register}
           onDrop={(files: Array<File>) => {
             setValue("file", files[0]);
+            setIsFile(true);
           }}
         />
       </div>
 
-      <Button type="submit" className="" disabled={loading}>
+      <Button type="submit" className="" disabled={loading || !isFile}>
         {loading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -376,7 +382,6 @@ const AddStudentForm: React.FC = () => {
           "Add Student"
         )}
       </Button>
-      <Notifications />
     </form>
   );
 };
